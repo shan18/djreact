@@ -13,7 +13,7 @@ class ArticleList extends Component {
   }
 
   componentDidMount () {
-    axios.get('http://127.0.0.1:8000/api/')
+    axios.get('https://djreact-blog.herokuapp.com/api/')
       .then(response => {
         this.setState({
           articles: response.data

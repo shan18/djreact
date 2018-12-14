@@ -12,7 +12,7 @@ class CustomForm extends React.Component {
     const content = event.target.elements.content.value
     switch (requestType) {
       case 'post':
-        return axios.post('http://127.0.0.1:8000/api/', {
+        return axios.post('https://djreact-blog.herokuapp.com/api/', {
           title: title,
           description: description,
           content: content
@@ -20,7 +20,7 @@ class CustomForm extends React.Component {
         .then(response => console.log(response))
         .catch(error => console.log(error))
       case 'put':
-        return axios.put(`http://127.0.0.1:8000/api/${articleID}/`, {
+        return axios.put(`https://djreact-blog.herokuapp.com/api/${articleID}/`, {
           title: title,
           description: description,
           content: content
