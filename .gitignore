@@ -9,9 +9,6 @@ __pycache__/
 *$py.class
 *.pyc
 
-# Django stuff:
-db.sqlite3
-
 # Environments
 .env
 .venv
