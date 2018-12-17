@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Form, Input, Button } from 'antd'
 import axios from 'axios'
 
@@ -10,6 +11,10 @@ class CustomForm extends React.Component {
     const title = event.target.elements.title.value
     const description = event.target.elements.description.value
     const content = event.target.elements.content.value
+    axios.defaults.headers = {
+      'Content-Type': 'application/json',
+      Authorization: this.props.token
+    }
     switch (requestType) {
       case 'post':
         return axios.post('https://djreact-blog.herokuapp.com/api/', {
@@ -52,4 +57,10 @@ class CustomForm extends React.Component {
   }
 }
 
-export default CustomForm
+const mapStateToProps = state => {
+  return {
+    token: state.token
+  }
+}
+
+export default connect(mapStateToProps)(CustomForm)

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import axios from 'axios'
 import { Button, Card } from 'antd'
 
@@ -13,19 +14,34 @@ class ArticleDetail extends Component {
   }
 
   handleDelete = (event) => {
-    const { articleID } = this.props.match.params
-    axios.delete(`https://djreact-blog.herokuapp.com/api/${articleID}/`)
-    this.props.history.push('/')
+    if (this.props.token !== null) {
+      axios.defaults.headers = {
+        'Content-Type': 'application/json',
+        Authorization: this.props.token
+      }
+      const { articleID } = this.props.match.params
+      axios.delete(`https://djreact-blog.herokuapp.com/api/${articleID}/`)
+      this.props.history.push('/')
+    } else {
+      // Show some kind of message
+    }
   }
 
-  componentDidMount () {
-    const { articleID } = this.props.match.params
-    axios.get(`https://djreact-blog.herokuapp.com/api/${articleID}/`)
-      .then(response => {
-        this.setState({
-          article: response.data
+  componentWillReceiveProps (newProps) {
+    console.log(newProps)
+    if (newProps.token) {
+      axios.defaults.headers = {
+        'Content-Type': 'application/json',
+        Authorization: newProps.token
+      }
+      const { articleID } = this.props.match.params
+      axios.get(`https://djreact-blog.herokuapp.com/api/${articleID}/`)
+        .then(response => {
+          this.setState({
+            article: response.data
+          })
         })
-      })
+    }
   }
 
   render () {
@@ -47,4 +63,10 @@ class ArticleDetail extends Component {
   }
 }
 
-export default ArticleDetail
+const mapStateToProps = state => {
+  return {
+    token: state.token
+  }
+}
+
+export default connect(mapStateToProps)(ArticleDetail)
