@@ -14,13 +14,13 @@ class ArticleDetail extends Component {
 
   handleDelete = (event) => {
     const { articleID } = this.props.match.params
-    axios.delete(`https://djreact-blog.herokuapp.com/api/${articleID}`)
+    axios.delete(`https://djreact-blog.herokuapp.com/api/${articleID}/`)
     this.props.history.push('/')
   }
 
   componentDidMount () {
     const { articleID } = this.props.match.params
-    axios.get(`https://djreact-blog.herokuapp.com/api/${articleID}`)
+    axios.get(`https://djreact-blog.herokuapp.com/api/${articleID}/`)
       .then(response => {
         this.setState({
           article: response.data
